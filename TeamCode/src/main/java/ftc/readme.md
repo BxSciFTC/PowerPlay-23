@@ -1,3 +1,20 @@
+## Resources
+
+Link to Miro Robot File Structure Diagram:
+https://miro.com/app/board/uXjVMbk5HOI=
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## TeamCode Module
 
 Welcome!

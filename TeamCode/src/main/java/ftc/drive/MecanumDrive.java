@@ -1,11 +1,17 @@
-package org.firstinspires.ftc.teamcode.HardWare;
+package ftc.drive;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
 
-public class RobotHardware {
+public class MecanumDrive {
+
+    /*
+    *
+    * Can edit or delete anything, this is just a template
+    *
+    * */
+
     private OpMode opMode = null;
 
     private DcMotor leftFrontDrive = null;
@@ -29,7 +35,7 @@ public class RobotHardware {
     public static final double ARM_UP_POWER    =  0.45 ;
     public static final double ARM_DOWN_POWER  = -0.45 ;
 
-    public RobotHardware (OpMode opmode) {
+    public MecanumDrive(OpMode opmode) {
         this.opMode = opmode;
     }
 
