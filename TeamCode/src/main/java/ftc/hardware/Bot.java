@@ -10,7 +10,7 @@ public class Bot extends MechanismInherit {
 
     @Override
     public void init(HardwareMap hwMap) {
-
+        drive = new MecanumDrive(hwMap);
     }
 
     //PS4 Controller

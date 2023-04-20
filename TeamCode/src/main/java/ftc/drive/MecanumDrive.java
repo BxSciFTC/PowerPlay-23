@@ -2,6 +2,7 @@ package ftc.drive;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class MecanumDrive {
@@ -12,7 +13,7 @@ public class MecanumDrive {
     *
     * */
 
-    private OpMode opMode = null;
+    private HardwareMap hwMap = null;
 
     private DcMotor leftFrontDrive = null;
     private DcMotor leftBackDrive = null;
@@ -35,16 +36,16 @@ public class MecanumDrive {
     public static final double ARM_UP_POWER    =  0.45 ;
     public static final double ARM_DOWN_POWER  = -0.45 ;
 
-    public MecanumDrive(OpMode opmode) {
-        this.opMode = opmode;
+    public MecanumDrive(HardwareMap hwMap) {
+        this.hwMap = hwMap;
     }
 
     public void init() {
-        leftFrontDrive  = opMode.hardwareMap.get(DcMotor.class, "left_front_drive");
-        leftBackDrive  = opMode.hardwareMap.get(DcMotor.class, "left_back_drive");
-        rightFrontDrive = opMode.hardwareMap.get(DcMotor.class, "right_front_drive");
-        rightBackDrive = opMode.hardwareMap.get(DcMotor.class, "right_back_drive");
-        armMotor   = opMode.hardwareMap.get(DcMotor.class, "arm");
+        leftFrontDrive  = hwMap.get(DcMotor.class, "left_front_drive");
+        leftBackDrive  = hwMap.get(DcMotor.class, "left_back_drive");
+        rightFrontDrive = hwMap.get(DcMotor.class, "right_front_drive");
+        rightBackDrive = hwMap.get(DcMotor.class, "right_back_drive");
+        armMotor   = hwMap.get(DcMotor.class, "arm");
 
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -56,16 +57,14 @@ public class MecanumDrive {
         rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        axis1 = opMode.hardwareMap.get(Servo.class, "axis1");
-        axis2 = opMode.hardwareMap.get(Servo.class, "axis2");
-        axis3 = opMode.hardwareMap.get(Servo.class, "axis3");
+        axis1 = hwMap.get(Servo.class, "axis1");
+        axis2 = hwMap.get(Servo.class, "axis2");
+        axis3 = hwMap.get(Servo.class, "axis3");
 
         axis1.setPosition(MID_SERVO);
         axis2.setPosition(MID_SERVO);
         axis3.setPosition(MID_SERVO);
 
-        opMode.telemetry.addData("Status", "Hardware initialized");
-        opMode.telemetry.update();
     }
 
 

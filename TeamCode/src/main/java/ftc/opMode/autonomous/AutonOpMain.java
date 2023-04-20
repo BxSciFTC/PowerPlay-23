@@ -9,7 +9,6 @@ import ftc.drive.MecanumDrive;
 
 @Autonomous(name="MAIN", group="autonomous")
 public class AutonOpMain extends LinearOpMode {
-    MecanumDrive robot = new MecanumDrive(this);
 
     public void runOpMode(){
 
