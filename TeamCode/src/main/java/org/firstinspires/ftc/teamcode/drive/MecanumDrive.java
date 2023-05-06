@@ -66,5 +66,7 @@ public class MecanumDrive {
 
     }
 
-
+    public void forwardTest(int power) {
+        rightFrontDrive.setPower(power);
+    }
 }
