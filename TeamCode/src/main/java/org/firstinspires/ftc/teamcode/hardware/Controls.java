@@ -24,10 +24,14 @@ public class Controls extends MechanismInherit {
     public void init(HardwareMap hwMap) {
         drive = new MecanumDrive(hwMap);
     }
-    public void run(Gamepad gamepad, Gamepad gamepad2) {
-        move(gamepad);
+
+    public void run(Gamepad gamepad) {
+        gamepad2.copy(gamepad1);
+        gamepad1.copy(gamepad);
+        move();
     }
-    public void move(Gamepad gamepad) {
+
+    private void move() {
         //rising
         if (gamepad1.cross && !gamepad2.cross) {
             drive.forwardTest(1);
