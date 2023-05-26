@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
-@Autonomous(name="MAIN", group="autonomous")
+@Autonomous (name="AutonOpMain", group = "_1")
 public class AutonOpMain extends LinearOpMode {
 
     public void runOpMode(){

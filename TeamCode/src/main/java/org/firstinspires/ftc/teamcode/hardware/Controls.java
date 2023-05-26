@@ -7,7 +7,12 @@ import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
 
 /*
 *
-* This is the controller class.
+* This is the TeleOp controller class.
+*
+* I made a design decision to not use field oriented driving
+* because of potential gyro drift and limited time.
+*
+* Thus I will use the MecamumDrive class instead of combining with another
 *
 * */
 
@@ -29,6 +34,7 @@ public class Controls extends MechanismInherit {
         gamepad2.copy(gamepad1);
         gamepad1.copy(gamepad);
         move();
+        score();
     }
 
     private void move() {
@@ -85,6 +91,8 @@ public class Controls extends MechanismInherit {
 
         }
     }
+    private void score() {
 
+    }
 
 }

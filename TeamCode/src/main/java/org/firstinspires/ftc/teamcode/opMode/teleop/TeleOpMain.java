@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.hardware.Controls;
 
-@TeleOp(name="MAIN", group = "TeleOpMode")
+@TeleOp (name="TeleOpMain", group = "_1")
 public class TeleOpMain extends LinearOpMode{
     Controls bot = new Controls();
 
