@@ -21,9 +21,9 @@ public class Controls extends MechanismInherit {
     public MecanumDrive drive;
 
     //1 is current gamepad, 2 is previous iteration
-    Gamepad gamepad1 = new Gamepad();
+    private Gamepad gamepad1 = new Gamepad();
 
-    Gamepad gamepad2 = new Gamepad();
+    private Gamepad gamepad2 = new Gamepad();
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -38,9 +38,13 @@ public class Controls extends MechanismInherit {
     }
 
     private void move() {
+        drive.setWeightedDrivePower(gamepad1);
+
+    }
+    private void score() {
         //rising
         if (gamepad1.cross && !gamepad2.cross) {
-            drive.forwardTest(1);
+
         }
         if (gamepad1.circle && !gamepad2.circle) {
 
@@ -64,10 +68,9 @@ public class Controls extends MechanismInherit {
 
         }
 
-
         //falling
         if (!gamepad1.cross && gamepad2.cross) {
-            drive.forwardTest(0);
+
         }
         if (!gamepad1.circle && gamepad2.circle) {
 
@@ -90,9 +93,6 @@ public class Controls extends MechanismInherit {
         if (!gamepad1.dpad_right && gamepad2.dpad_right) {
 
         }
-    }
-    private void score() {
-
     }
 
 }

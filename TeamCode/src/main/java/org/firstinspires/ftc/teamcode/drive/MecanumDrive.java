@@ -1,72 +1,59 @@
 package org.firstinspires.ftc.teamcode.drive;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class MecanumDrive {
+    private HardwareMap hwMap;
 
-    /*
-    *
-    * Can edit or delete anything, this is just a template
-    *
-    * */
-
-    private HardwareMap hwMap = null;
-
-    private DcMotor leftFrontDrive = null;
-    private DcMotor leftBackDrive = null;
-    private DcMotor rightFrontDrive = null;
-    private DcMotor rightBackDrive = null;
-    private DcMotor armMotor = null;
-
-    private double leftFrontPower;
-    private double leftBackPower;
-    private double rightFrontPower;
-    private double rightBackPower;
-
-    private Servo axis1 = null;
-    private Servo axis2 = null;
-    private Servo axis3 = null;
-
-    //constants
-    public static final double MID_SERVO       =  0.5 ;
-    public static final double HAND_SPEED      =  0.02 ;  // sets rate to move servo
-    public static final double ARM_UP_POWER    =  0.45 ;
-    public static final double ARM_DOWN_POWER  = -0.45 ;
+    private DcMotor leftFront;
+    private DcMotor leftRear;
+    private DcMotor rightFront;
+    private DcMotor rightRear;
 
     public MecanumDrive(HardwareMap hwMap) {
         this.hwMap = hwMap;
+        init();
     }
 
-    public void init() {
-        leftFrontDrive  = hwMap.get(DcMotor.class, "left_front_drive");
-        leftBackDrive  = hwMap.get(DcMotor.class, "left_back_drive");
-        rightFrontDrive = hwMap.get(DcMotor.class, "right_front_drive");
-        rightBackDrive = hwMap.get(DcMotor.class, "right_back_drive");
-        armMotor   = hwMap.get(DcMotor.class, "arm");
+    private void init() {
+        leftFront = hwMap.get(DcMotor.class, "leftFront");
+        leftRear = hwMap.get(DcMotor.class, "leftRear");
+        rightFront = hwMap.get(DcMotor.class, "rightRear");
+        rightRear = hwMap.get(DcMotor.class, "rightFront");
 
-        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftFront.setDirection(DcMotor.Direction.REVERSE);
+        leftRear.setDirection(DcMotor.Direction.REVERSE);
 
-        leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        axis1 = hwMap.get(Servo.class, "axis1");
-        axis2 = hwMap.get(Servo.class, "axis2");
-        axis3 = hwMap.get(Servo.class, "axis3");
-
-        axis1.setPosition(MID_SERVO);
-        axis2.setPosition(MID_SERVO);
-        axis3.setPosition(MID_SERVO);
+        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
 
-    public void forwardTest(int power) {
-        rightFrontDrive.setPower(power);
+    //used to fix imperfect strafing
+    //TODO: test this value with the driver
+    double STRAFE_INCREASE = 1.1;
+    //disregard the pose header, only use magnitude
+    public void setWeightedDrivePower(Gamepad gamepad) {
+        double x = gamepad.left_stick_x * STRAFE_INCREASE;
+
+        //may or may not need to flip this sign - +
+        double y = gamepad.left_stick_y;
+
+        //right stick controls turning
+        double rx = gamepad.right_stick_x;
+
+        //typical Mecanum Drive power calculations
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+        leftFront.setPower((y + x + rx) /denominator);
+        leftRear.setPower((y - x + rx)  /denominator);
+        rightFront.setPower((y - x - rx)/denominator);
+        rightRear.setPower((y + x - rx) /denominator);
     }
 }
