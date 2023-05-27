@@ -11,10 +11,17 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 * */
 public class IntakeLiftFSM extends MechanismInherit {
     HardwareMap hwMap;
+    IntakeFSM intake = new IntakeFSM();
+    LiftFSM lift = new LiftFSM();
 
     //TODO: fill states
     public enum States {
-
+        IDLE,
+        PICK_BOTTOM,
+        LOW,
+        MED,
+        HIGH,
+        SCORE,
     }
 
     public States state;
@@ -22,6 +29,8 @@ public class IntakeLiftFSM extends MechanismInherit {
     @Override
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
+        intake.init(hwMap);
+        lift.init(hwMap);
     }
 
 }
