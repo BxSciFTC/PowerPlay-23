@@ -16,10 +16,10 @@ public class IntakeLiftFSM extends MechanismInherit {
 
     //TODO: fill states
     public enum States {
-        IDLE,
-        PICK_BOTTOM,
+        BOTTOM_OPEN,
+        BOTTOM_CLOSE,
         LOW,
-        MED,
+        MID,
         HIGH,
         SCORE,
     }
@@ -33,4 +33,34 @@ public class IntakeLiftFSM extends MechanismInherit {
         lift.init(hwMap);
     }
 
+    public void loop() {
+        switch (state) {
+            case BOTTOM_OPEN:
+                lift.bottom();
+                intake.close();
+                break;
+            case BOTTOM_CLOSE:
+                lift.bottom();
+                intake.open();
+                break;
+            case LOW:
+                lift.low();
+                break;
+            case MID:
+                lift.mid();
+                break;
+            case HIGH:
+                lift.high();
+                break;
+            case SCORE:
+                intake.open();
+                break;
+        }
+    }
+    public void pickUpOpen() {state = States.BOTTOM_OPEN;}
+    public void pickUpClose() {state = States.BOTTOM_CLOSE;}
+    public void low() {state = States.LOW;}
+    public void mid() {state = States.MID;}
+    public void high() {state = States.HIGH;}
+    public void score() {state = States.SCORE;}
 }

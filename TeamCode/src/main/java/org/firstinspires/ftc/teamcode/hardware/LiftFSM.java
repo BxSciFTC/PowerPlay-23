@@ -52,7 +52,7 @@ public class LiftFSM extends MechanismInherit {
     public void low() {
         state = state.LOW;
     }
-    public void rest() {
+    public void bottom() {
         state = state.BOTTOM;
     }
 

@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
 public class Controls extends MechanismInherit {
 
     public MecanumDrive drive;
+    public IntakeLiftFSM arm;
 
     //1 is current gamepad, 2 is previous iteration
     private Gamepad gamepad1 = new Gamepad();
@@ -42,19 +43,29 @@ public class Controls extends MechanismInherit {
 
     }
     private void score() {
-        //rising
+        //rising~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         if (gamepad1.cross && !gamepad2.cross) {
-
+            arm.low();
         }
         if (gamepad1.circle && !gamepad2.circle) {
-
+            arm.mid();
         }
         if (gamepad1.triangle && !gamepad2.triangle) {
-
+            arm.high();
         }
         if (gamepad1.square && !gamepad2.square) {
-
+            arm.score();
         }
+
+
+        if (gamepad1.left_bumper && !gamepad2.left_bumper) {
+            arm.pickUpOpen();
+        }
+        if (gamepad1.right_bumper && !gamepad2.right_bumper) {
+            arm.pickUpClose();
+        }
+
+
         if (gamepad1.dpad_up && !gamepad2.dpad_up) {
 
         }
@@ -68,7 +79,7 @@ public class Controls extends MechanismInherit {
 
         }
 
-        //falling
+        //falling~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         if (!gamepad1.cross && gamepad2.cross) {
 
         }
@@ -81,6 +92,16 @@ public class Controls extends MechanismInherit {
         if (!gamepad1.square && gamepad2.square) {
 
         }
+
+
+        if (gamepad1.left_bumper && !gamepad2.left_bumper) {
+
+        }
+        if (gamepad1.right_bumper && !gamepad2.right_bumper) {
+
+        }
+
+
         if (!gamepad1.dpad_up && gamepad2.dpad_up) {
 
         }
@@ -94,5 +115,4 @@ public class Controls extends MechanismInherit {
 
         }
     }
-
 }
