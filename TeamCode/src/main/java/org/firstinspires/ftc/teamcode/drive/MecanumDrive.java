@@ -10,10 +10,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class MecanumDrive {
     private HardwareMap hwMap;
 
-    private DcMotor leftFront;
-    private DcMotor leftRear;
-    private DcMotor rightFront;
-    private DcMotor rightRear;
+    private DcMotorEx leftFront;
+    private DcMotorEx leftRear;
+    private DcMotorEx rightFront;
+    private DcMotorEx rightRear;
 
     public MecanumDrive(HardwareMap hwMap) {
         this.hwMap = hwMap;
@@ -21,10 +21,10 @@ public class MecanumDrive {
     }
 
     private void init() {
-        leftFront = hwMap.get(DcMotor.class, "leftFront");
-        leftRear = hwMap.get(DcMotor.class, "leftRear");
-        rightFront = hwMap.get(DcMotor.class, "rightRear");
-        rightRear = hwMap.get(DcMotor.class, "rightFront");
+        leftFront = hwMap.get(DcMotorEx.class, "leftFront");
+        leftRear = hwMap.get(DcMotorEx.class, "leftRear");
+        rightFront = hwMap.get(DcMotorEx.class, "rightRear");
+        rightRear = hwMap.get(DcMotorEx.class, "rightFront");
 
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftRear.setDirection(DcMotor.Direction.REVERSE);
