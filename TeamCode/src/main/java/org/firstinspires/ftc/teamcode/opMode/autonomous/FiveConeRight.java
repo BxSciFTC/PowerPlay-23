@@ -144,89 +144,89 @@ public class FiveConeRight extends LinearOpMode {
                 .build();
 
         //OPENCV
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        cam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "camera"), cameraMonitorViewId);
-        aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
-        cam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(
-                WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        cam.setPipeline(aprilTagDetectionPipeline);
-
-        cam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
-            @Override
-            public void onOpened() {
-                cam.startStreaming(800, 600, OpenCvCameraRotation.UPRIGHT);
-            }
-            @Override
-            public void onError(int errorCode) {
-                telemetry.addData("Camera failed :((", "D:");
-                telemetry.update();
-            }
-        });
-
-        telemetry.setMsTransmissionInterval(50);
+//        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+//        cam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "camera"), cameraMonitorViewId);
+//        aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
+//        cam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(
+//                WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+//        cam.setPipeline(aprilTagDetectionPipeline);
+//
+//        cam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+//            @Override
+//            public void onOpened() {
+//                cam.startStreaming(800, 600, OpenCvCameraRotation.UPRIGHT);
+//            }
+//            @Override
+//            public void onError(int errorCode) {
+//                telemetry.addData("Camera failed :((", "D:");
+//                telemetry.update();
+//            }
+//        });
+//
+//        telemetry.setMsTransmissionInterval(50);
         /*
          * The INIT-loop:
          * This REPLACES waitForStart!
          */
-        while (!isStarted() && !isStopRequested())
-        {
-            ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
-
-            if(currentDetections.size() != 0)
-            {
-                boolean tagFound = false;
-
-                for(AprilTagDetection tag : currentDetections)
-                {
-                    if(tag.id == left || tag.id == middle || tag.id == right)
-                    {
-                        tagOfInterest = tag;
-                        tagFound = true;
-                        break;
-                    }
-                }
-
-                if(tagFound)
-                {
-                    telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
-                    tagToTelemetry(tagOfInterest);
-                }
-                else
-                {
-                    telemetry.addLine("Don't see tag of interest :(");
-
-                    if(tagOfInterest == null)
-                    {
-                        telemetry.addLine("(The tag has never been seen)");
-                    }
-                    else
-                    {
-                        telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
-                        tagToTelemetry(tagOfInterest);
-                    }
-                }
-
-            }
-            else
-            {
-                telemetry.addLine("Don't see tag of interest :(");
-
-                if(tagOfInterest == null)
-                {
-                    telemetry.addLine("(The tag has never been seen)");
-                }
-                else
-                {
-                    telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
-                    tagToTelemetry(tagOfInterest);
-                }
-
-            }
-
-            telemetry.update();
-            sleep(20);
-        }
-        cam.stopStreaming();
+//        while (!isStarted() && !isStopRequested())
+//        {
+//            ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
+//
+//            if(currentDetections.size() != 0)
+//            {
+//                boolean tagFound = false;
+//
+//                for(AprilTagDetection tag : currentDetections)
+//                {
+//                    if(tag.id == left || tag.id == middle || tag.id == right)
+//                    {
+//                        tagOfInterest = tag;
+//                        tagFound = true;
+//                        break;
+//                    }
+//                }
+//
+//                if(tagFound)
+//                {
+//                    telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
+//                    tagToTelemetry(tagOfInterest);
+//                }
+//                else
+//                {
+//                    telemetry.addLine("Don't see tag of interest :(");
+//
+//                    if(tagOfInterest == null)
+//                    {
+//                        telemetry.addLine("(The tag has never been seen)");
+//                    }
+//                    else
+//                    {
+//                        telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
+//                        tagToTelemetry(tagOfInterest);
+//                    }
+//                }
+//
+//            }
+//            else
+//            {
+//                telemetry.addLine("Don't see tag of interest :(");
+//
+//                if(tagOfInterest == null)
+//                {
+//                    telemetry.addLine("(The tag has never been seen)");
+//                }
+//                else
+//                {
+//                    telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
+//                    tagToTelemetry(tagOfInterest);
+//                }
+//
+//            }
+//
+//            telemetry.update();
+//            sleep(20);
+//        }
+//        cam.stopStreaming();
 
         drive.followTrajectorySequenceAsync(initial);
         endPose = initial.end();
@@ -244,21 +244,22 @@ public class FiveConeRight extends LinearOpMode {
             drive.update();
             arm.loop();
             if (coneCount == 5) {
-                if (tagOfInterest.id == left) {
-                    drive.followTrajectorySequenceAsync(leftPark);
-                }else if (tagOfInterest.id == middle) {
-                    drive.followTrajectorySequenceAsync(midPark);
-                }else if (tagOfInterest.id == right) {
-                    drive.followTrajectorySequenceAsync(rightPark);
-                }
+//                if (tagOfInterest.id == left) {
+//                    drive.followTrajectorySequenceAsync(leftPark);
+//                }else if (tagOfInterest.id == middle) {
+//                    drive.followTrajectorySequenceAsync(midPark);
+//                }else if (tagOfInterest.id == right) {
+//                    drive.followTrajectorySequenceAsync(rightPark);
+//                }
+                drive.followTrajectorySequenceAsync(midPark);
             }
             telemetry.update();
         }
         //follow to parking
     }
 
-    @SuppressLint("DefaultLocale")
-    void tagToTelemetry(AprilTagDetection detection) {
-        telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
-    }
+//    @SuppressLint("DefaultLocale")
+//    void tagToTelemetry(AprilTagDetection detection) {
+//        telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
+//    }
 }
