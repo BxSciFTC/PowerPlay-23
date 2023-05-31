@@ -50,6 +50,8 @@ public class Lift extends MechanismInherit {
         this.hwMap = hwMap;
         lift = hwMap.get(DcMotorEx.class, "lift");
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //TODO: check if need to reverse direction
     }
     //TODO: Implement all states in LiftFSM, as well as
